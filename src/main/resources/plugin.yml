@@ -1,0 +1,6 @@
+name: DiscordBot
+author: Mickyjou
+version: VERSION
+main: de.mickyjou.plugins.discordbot.DiscordBotPlugin
+depend: [PlayerDataStore]
+commands:
