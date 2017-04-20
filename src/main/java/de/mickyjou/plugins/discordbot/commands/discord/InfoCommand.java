@@ -5,7 +5,7 @@ import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedE
 
 public class InfoCommand implements Command {
 
-    private final DiscordBotPlugin plugin;
+    private DiscordBotPlugin plugin;
 
     public InfoCommand(DiscordBotPlugin plugin){
         this.plugin = plugin;

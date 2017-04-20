@@ -1,10 +1,11 @@
 package de.mickyjou.plugins.discordbot.commands.discord;
 
 import de.mickyjou.plugins.discordbot.DiscordBotPlugin;
-import de.mickyjou.plugins.discordbot.messages.PrivateDiscordMessage;
 import de.mickyjou.plugins.discordbot.utils.StatsGetter;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
+import sx.blah.discord.handle.obj.IChannel;
 
 public class StatsCommand implements Command {
 
@@ -22,37 +23,56 @@ public class StatsCommand implements Command {
 
     @Override
     public void action(String[] args, MessageReceivedEvent event) {
-        if (args.length == 1) {
-            String name = args[1];
-            StatsGetter stats = new StatsGetter(Bukkit.getOfflinePlayer(name));
+        IChannel privateChannel = event.getAuthor().getOrCreatePMChannel();
+        boolean nameExists = false;
+        if (args.length == 0) {
+            for (OfflinePlayer all : Bukkit.getOfflinePlayers()) {
+                if (all.getName().equalsIgnoreCase(event.getAuthor().getName())) {
+                    nameExists = true;
 
-            String line = System.getProperty("line.separator");
-            new PrivateDiscordMessage("Team: " + stats.getTeam() + line +
-                    "TeamMate: " + Bukkit.getOfflinePlayer(stats.getTeamMate()).getName() + line +
-                    "Kills: " + stats.getKills() + line +
-                    "Verwarnungen: " + stats.getWarnings()
+                    StatsGetter stats = new StatsGetter(Bukkit.getOfflinePlayer(event.getAuthor().getName()));
 
+                    String line = System.getProperty("line.separator");
 
-                    , event).queue();
+                    privateChannel.sendMessage("Team: " + stats.getTeam() + line +
+                            "Team-Mate: " + Bukkit.getOfflinePlayer(stats.getTeamMate()).getName() + line +
+                            "Kills: " + stats.getKills() + line +
+                            "Verwarnungen: " + stats.getWarnings()
+                    );
+                    break;
 
+                }
+            }
+            if(!nameExists){
+                privateChannel.sendMessage("Could not find the User with the name " + event.getAuthor().getName());
+            }
+        } else if (args.length == 1) {
+            String name = args[0];
 
-        } else if (args.length == 0) {
+            for (OfflinePlayer all : Bukkit.getOfflinePlayers()) {
+                if (all.getName().equalsIgnoreCase(name)) {
+                    nameExists = true;
 
+                    StatsGetter stats = new StatsGetter(Bukkit.getOfflinePlayer(name));
 
-            String name = event.getAuthor().getName().trim();
-            StatsGetter stats = new StatsGetter(Bukkit.getOfflinePlayer(name));
+                    String line = System.getProperty("line.separator");
 
-            String line = System.getProperty("line.separator");
+                    privateChannel.sendMessage("Team: " + stats.getTeam() + line +
+                            "Team-Mate: " + Bukkit.getOfflinePlayer(stats.getTeamMate()).getName() + line +
+                            "Kills: " + stats.getKills() + line +
+                            "Verwarnungen: " + stats.getWarnings()
+                    );
+                    break;
 
-            new PrivateDiscordMessage("Team: " + stats.getTeam() + line +
-                    "TeamMate: " + Bukkit.getOfflinePlayer(stats.getTeamMate()).getName() + line +
-                    "Kills: " + stats.getKills() + line +
-                    "Verwarnungen: " + stats.getWarnings()
-
-
-                    , event).queue();
-
+                }
+            }
+            if(!nameExists){
+                privateChannel.sendMessage("Could not find the User with the name " + name);
+            }
+        } else {
+            privateChannel.sendMessage("Wrong Usage. Please use !stats or !stats [name].");
         }
+
     }
 
     @Override

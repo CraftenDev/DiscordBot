@@ -9,7 +9,7 @@ public class DiscordMessage extends Message {
     private DiscordBotPlugin plugin = DiscordBotPlugin.getPlugin(DiscordBotPlugin.class);
 
     public DiscordMessage(String content) {
-        this.message = message;
+        this.message = content;
     }
 
     public void queue() {
