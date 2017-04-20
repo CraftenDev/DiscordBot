@@ -34,16 +34,18 @@ public class StatsCommand implements Command {
 
                     String line = System.getProperty("line.separator");
 
-                    privateChannel.sendMessage("Team: " + stats.getTeam() + line +
+                    privateChannel.sendMessage(
+                            "Stats of the Player " + event.getAuthor().getName() + ":" +  line +
+                            "Team: " + stats.getTeam() + line +
                             "Team-Mate: " + Bukkit.getOfflinePlayer(stats.getTeamMate()).getName() + line +
                             "Kills: " + stats.getKills() + line +
-                            "Verwarnungen: " + stats.getWarnings()
+                            "Warnings: " + stats.getWarnings()
                     );
                     break;
 
                 }
             }
-            if(!nameExists){
+            if (!nameExists) {
                 privateChannel.sendMessage("Could not find the User with the name " + event.getAuthor().getName());
             }
         } else if (args.length == 1) {
@@ -51,23 +53,27 @@ public class StatsCommand implements Command {
 
             for (OfflinePlayer all : Bukkit.getOfflinePlayers()) {
                 if (all.getName().equalsIgnoreCase(name)) {
-                    nameExists = true;
+                    if (new StatsGetter(all).getTeam() != null) {
+                        nameExists = true;
 
-                    StatsGetter stats = new StatsGetter(Bukkit.getOfflinePlayer(name));
+                        StatsGetter stats = new StatsGetter(Bukkit.getOfflinePlayer(name));
 
-                    String line = System.getProperty("line.separator");
+                        String line = System.getProperty("line.separator");
 
-                    privateChannel.sendMessage("Team: " + stats.getTeam() + line +
-                            "Team-Mate: " + Bukkit.getOfflinePlayer(stats.getTeamMate()).getName() + line +
-                            "Kills: " + stats.getKills() + line +
-                            "Verwarnungen: " + stats.getWarnings()
-                    );
-                    break;
+                        privateChannel.sendMessage(
+                                "Stats of the Player " + name + ":" +  line +
+                                "Team: " + stats.getTeam() + line +
+                                "Team-Mate: " + Bukkit.getOfflinePlayer(stats.getTeamMate()).getName() + line +
+                                "Kills: " + stats.getKills() + line +
+                                "Warnings: " + stats.getWarnings()
+                        );
+                        break;
 
+                    }
                 }
             }
-            if(!nameExists){
-                privateChannel.sendMessage("Could not find the User with the name " + name);
+            if (!nameExists) {
+                privateChannel.sendMessage("Could not find the User with the name: " + name);
             }
         } else {
             privateChannel.sendMessage("Wrong Usage. Please use !stats or !stats [name].");
