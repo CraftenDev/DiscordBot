@@ -39,7 +39,7 @@ public class StatsCommand implements Command {
                             "Team: " + stats.getTeam() + line +
                             "Team-Mate: " + Bukkit.getOfflinePlayer(stats.getTeamMate()).getName() + line +
                             "Kills: " + stats.getKills() + line +
-                            "Warnings: " + stats.getWarnings()
+                            "Warnings: " + stats.getWarnings() + line
                     );
                     break;
 
@@ -65,7 +65,7 @@ public class StatsCommand implements Command {
                                 "Team: " + stats.getTeam() + line +
                                 "Team-Mate: " + Bukkit.getOfflinePlayer(stats.getTeamMate()).getName() + line +
                                 "Kills: " + stats.getKills() + line +
-                                "Warnings: " + stats.getWarnings()
+                                "Warnings: " + stats.getWarnings() + line
                         );
                         break;
 

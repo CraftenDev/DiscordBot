@@ -21,7 +21,7 @@ public class InfoCommand implements Command {
     public void action(String[] args, MessageReceivedEvent event) {
         String line = System.getProperty("line.separator");
 
-        event.getAuthor().getOrCreatePMChannel().sendMessage("Dies ist der Bot vom Craften PvP-Event." + line + "Weitere Infos findest du im Forum!");
+        event.getAuthor().getOrCreatePMChannel().sendMessage("Dies ist der Bot vom Craften PvP-Event." + line + "Weitere Infos findest du im Forum!" + line);
     }
 
     @Override

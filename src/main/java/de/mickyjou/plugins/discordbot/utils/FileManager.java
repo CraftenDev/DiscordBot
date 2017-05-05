@@ -1,6 +1,5 @@
 package de.mickyjou.plugins.discordbot.utils;
 
-import de.mickyjou.plugins.discordbot.DiscordBotPlugin;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -52,6 +51,6 @@ public class FileManager {
      * @return File
      */
     public static File getDataFolder() {
-        return DiscordBotPlugin.getPlugin(DiscordBotPlugin.class).getDataFolder();
+        return new File("/var/lib/minecraft/plugins/PvPEvent");
     }
 }
